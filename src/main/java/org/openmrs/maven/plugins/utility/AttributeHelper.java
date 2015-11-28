@@ -1,14 +1,17 @@
 package org.openmrs.maven.plugins.utility;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.components.interactivity.Prompter;
 import org.codehaus.plexus.components.interactivity.PrompterException;
-
-import java.io.File;
-import java.util.*;
 
 /**
  * Class for attribute helper functions
@@ -153,7 +156,7 @@ public class AttributeHelper {
         if (propertiesFile != null) {
             File server = propertiesFile.getParentFile();
             if (!server.getParentFile().equals(openmrsHome)) return null;
-            PropertyManager properties = new PropertyManager(propertiesFile.getPath());
+            ServerConfig properties = ServerConfig.loadServerConfig(server);
             if (properties.getParam(SDKConstants.PROPERTY_SERVER_ID) != null) return propertiesFile.getParentFile();
         }
         return null;
